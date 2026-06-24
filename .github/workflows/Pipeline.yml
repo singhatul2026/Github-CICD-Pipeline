@@ -1,32 +1,28 @@
-name: Deploy to Azure Resource using Terraform
+name: Deployment on Stage
 
 on:
   workflow_dispatch:
 
 jobs:
   terraform:
-    name: Terraform Deployment
     runs-on: ASG-GITHUB-RUNNER
 
     steps:
-      - name: Github-CICD-Pipeline
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Azure Login
         run: |
           az login --service-principal \
-            --username "2b0b84ea-cf5a-4d04-afa4-557b1e002369" \
-            --password "w_g8Q~K~F4w0IE1D3mXELQOf_XKwxwE9sqlcadsE" \
-            --tenant "b16e2942-acf7-4664-a827-c99d7e81a77d"
+            --username "${{ secrets.AZURE_CLIENT_ID }}" \
+            --password "${{ secrets.AZURE_CLIENT_SECRET }}" \
+            --tenant "${{ secrets.AZURE_TENANT_ID }}"
 
-      - name: Verify Azure Login
+      - name: Verify Login
         run: az account show
 
       - name: Terraform Init
         run: terraform init
-
-      - name: Terraform Validate
-        run: terraform validate
 
       - name: Terraform Plan
         run: terraform plan
