@@ -5,7 +5,7 @@ on:
 
 jobs:
   terraform:
-    runs-on: ASG-GITHUB-RUNNER
+    runs-on:  self-hosted
 
     steps:
       - name: Github-CICD-Pipeline
